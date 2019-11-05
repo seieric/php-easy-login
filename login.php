@@ -13,10 +13,12 @@ if (isset($_SESSION['user_name'])){
 }
 
 require './bin/functions.php';
-if (isset($_POST['user_name'] && $_POST['password'])){
+
+if (isset($_POST['user_name']) && isset($_POST['password']) && isset($_POST['csrf_token'])){
   $user_name = htmlspecialchars($_POST['user_name']);
   $password = htmlspecialchars($_POST['password']);
-
+  $token = htmlspecialchars($_POST['csrf_token']);
+  authorize_csrf_token($token); //CSRFトークンの認証
   authorize_user($user_name, $password);
 }
 
@@ -31,7 +33,7 @@ include './assets/head.php';
       <input type="text" name="user_name" class="input-text">
       <label for="password" >パスワード</label>
       <input type="password" name="password" class="input-text">
-      <input type="hidden" value="<?php echo_csrf_token(); ?>" >
+      <input type="hidden" name="csrf_token"value="<?php echo_csrf_token(); ?>" >
       <button name="login-button" value="ログイン" class="input-botton">ログイン</button>
     </form>
   </div>

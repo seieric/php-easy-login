@@ -7,11 +7,24 @@
 */
 
 function echo_csrf_token(){
+  echo generate_csrf_token();
+}
+
+function generate_csrf_token(){
   return hash('sha256', session_id());
 }
 
 function echo_title(){
 
+}
+
+function authorize_csrf_token($token){
+  if ($token == generate_csrf_token()){
+    return 1;
+  }else{
+    header("Location: login.php?e=wrong-token");
+    exit;
+  }
 }
 
 function authorize_user($user_name, $password){
