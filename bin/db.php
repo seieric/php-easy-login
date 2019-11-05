@@ -20,6 +20,6 @@ function connect(){
 }
 
 function select_user_by_password($user_name, $password){
-
+    $sql = "SELECT "
 }
  ?>

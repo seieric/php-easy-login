@@ -20,7 +20,7 @@ function echo_title(){
 
 function authorize_csrf_token($token){
   if ($token == generate_csrf_token()){
-    return 1;
+    return true;
   }else{
     header("Location: login.php?e=wrong-token");
     exit;

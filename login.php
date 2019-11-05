@@ -1,7 +1,7 @@
 <?php
 /**
 *PHP easy login
-*Copyright (c) 2019 せいえりく(seieric)
+*Copyright (c) 2019 seieric
 *This software is released under the MIT License.
 *http://opensource.org/licenses/mit-license.php
 */
@@ -39,7 +39,7 @@ include './assets/head.php';
   </div>
   <div id="footer">
     <hr />
-    <small>&copy 2019 せいえりく</small>
+    <small>&copy 2019 seieric</small>
   </div>
 </body>
 </html>
