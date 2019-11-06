@@ -6,6 +6,17 @@
 *http://opensource.org/licenses/mit-license.php
 */
 
+function set_title($title){
+  global $title = $title;
+}
+
+function require_logined(){
+  if (!isset($_SESSION['user_name'])){
+    header('Location: login.php');
+    exit;
+  }
+}
+
 function echo_csrf_token(){
   echo generate_csrf_token();
 }
@@ -15,7 +26,7 @@ function generate_csrf_token(){
 }
 
 function echo_title(){
-
+  echo global $title;
 }
 
 function authorize_csrf_token($token){

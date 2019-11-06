@@ -13,7 +13,7 @@ define('DB_HOST', '');
 define('DB_CHARSET', 'utf-8');
 define('DB_PASSWD', '');
 define('DB_PORT', '');
-define('DB_TABLE', 'php-login-users');
+define('DB_TABLE', 'php_login_users');
 
 //Page Settings
 define('DEFAULT_PAGE', '');

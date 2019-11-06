@@ -22,11 +22,11 @@ if (isset($_POST['user_name']) && isset($_POST['password']) && isset($_POST['csr
   authorize_user($user_name, $password);
 }
 
+set_title("ログイン");
 include './assets/head.php';
  ?>
 <body>
   <h1>ログイン</h1>
-  <hr />
   <div id="form">
     <form name="login-form">
       <label for="user" >ユーザー名</label>
