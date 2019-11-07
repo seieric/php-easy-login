@@ -58,4 +58,7 @@ function authorize_user($user_name, $password){
         exit;
       }
 }
+
+function select_user_by_password(){
+}
  ?>
