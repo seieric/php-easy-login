@@ -1,4 +1,3 @@
-<?php require (dirname(__FILE__) . '/../bin/functions.php'); ?>
 <!DOCTYPE html>
 <html lang="ja" dir="ltr">
   <head>
