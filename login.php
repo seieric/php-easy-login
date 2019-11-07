@@ -5,20 +5,14 @@
 *This software is released under the MIT License.
 *http://opensource.org/licenses/mit-license.php
 */
-@session_start();
-
-if (isset($_SESSION['user_name'])){
-  header("Location: #{DEFAULT_PAGE}");
-  exit;
-}
-
 require './bin/functions.php';
+require_unlogined();
 
 if (isset($_POST['user_name']) && isset($_POST['password']) && isset($_POST['csrf_token'])){
   $user_name = htmlspecialchars($_POST['user_name']);
   $password = htmlspecialchars($_POST['password']);
   $token = htmlspecialchars($_POST['csrf_token']);
-  authorize_csrf_token($token); //CSRFトークンの認証
+  authorize_csrf_token($token);
   authorize_user($user_name, $password);
 }
 

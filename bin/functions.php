@@ -7,12 +7,22 @@
 */
 
 function set_title($title){
-  global $title = $title;
+  global $page_title;
+  $page_title = $title;
 }
 
 function require_logined(){
-  if (!isset($_SESSION['user_name'])){
+  @session_start();
+  if(!isset($_SESSION['user_name'])){
     header('Location: login.php');
+    exit;
+  }
+}
+
+function require_unlogined(){
+  @session_start();
+  if(isset($_SESSION['user_name'])){
+    header('Location: /');
     exit;
   }
 }
@@ -26,7 +36,7 @@ function generate_csrf_token(){
 }
 
 function echo_title(){
-  echo global $title;
+  echo $page_title;
 }
 
 function authorize_csrf_token($token){
@@ -39,10 +49,6 @@ function authorize_csrf_token($token){
 }
 
 function authorize_user($user_name, $password){
-    if(!isset($user_name) || !isset($password)){
-      header("Location: login.php?e=no-input");
-      exit;
-    }else{
       require './db.php';
 
       if(select_user_by_password($user_name, $password)){
@@ -51,6 +57,5 @@ function authorize_user($user_name, $password){
         header("Location: #{AUTHORIZED_TOP_PAGE}");
         exit;
       }
-    }
 }
  ?>
