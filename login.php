@@ -5,7 +5,7 @@
 *This software is released under the MIT License.
 *http://opensource.org/licenses/mit-license.php
 */
-require __DIR__ . '/bin/functions.php';
+require_once __DIR__ . '/bin/functions.php';
 require_unlogined();
 
 if (isset($_POST['user_name']) && isset($_POST['password']) && isset($_POST['csrf_token'])){
@@ -17,7 +17,7 @@ if (isset($_POST['user_name']) && isset($_POST['password']) && isset($_POST['csr
 }
 
 set_title("ログイン");
-include __DIR__ . '/assets/head.php';
+include_once __DIR__ . '/assets/head.php';
  ?>
 <body>
   <h1>ログイン</h1>
