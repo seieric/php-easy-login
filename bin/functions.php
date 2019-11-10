@@ -49,16 +49,21 @@ function authorize_csrf_token($token){
 }
 
 function authorize_user($user_name, $password){
-      require './db.php';
+  require __DIR__ '/db.php';
 
-      if(select_user_by_password($user_name, $password)){
-        $_SESSION['user_name'] = $user_name;
-        $_SESSION['start_time'] = time();
-        header("Location: #{AUTHORIZED_TOP_PAGE}");
-        exit;
-      }
-}
+  connect();
+  $sql = 'SELECT * FROM user WHERE name ?';
+  $stmt = $pdo->prepare($sql);
+  $stmt->execute(array($user_name));
 
-function select_user_by_password($user_name, $password){
+  $result = $stmt->fetch(PDO::FETCH_ASSOC);
+  if ($result['password'] == $password){
+    $_SESSION['user_name'] = $user_name;
+    header('Location: /');
+    exit;
+  } else {
+    header('Location: /login.php?e=auth-failed')
+  }
+
 }
  ?>

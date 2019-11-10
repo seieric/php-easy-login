@@ -22,13 +22,13 @@ include_once __DIR__ . '/assets/head.php';
 <body>
   <h1>ログイン</h1>
   <div id="form">
-    <form name="login-form">
+    <form mehod="post" action="#" name="loginform">
       <label for="user" >ユーザー名</label>
       <input type="text" name="user_name" class="input-text">
       <label for="password" >パスワード</label>
       <input type="password" name="password" class="input-text">
       <input type="hidden" name="csrf_token"value="<?php echo_csrf_token(); ?>" >
-      <button name="login-button" value="ログイン" class="input-botton">ログイン</button>
+      <input type="submit" id="submit" name="login-button" value="ログイン" class="input-botton">ログイン</button>
     </form>
   </div>
   <div id="footer">

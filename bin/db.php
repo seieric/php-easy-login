@@ -5,21 +5,21 @@
 *This software is released under the MIT License.
 *http://opensource.org/licenses/mit-license.php
 */
-require './config.php'
+require __DIR__ '/config.php'
 
 //Functions
 function connect(){
+  $dsn = "mysql:dbname=#{DB_NAME};host=#{DB_HOST}";
+  $user_name = DB_USER;
+  $password = DB_PASSWD;
+
   try{
-    $pdo = new PDO("mysql:host=#{DB_HOST};dbname=#{DB_NAME};charset=#{DB_CHARSET}", DB_USER, DB_PASSWORD));
+    $pdo = new PDO($dsn, $user_name, $password));
   } catch (PDOException $e){
     $fp = $fopen("./logs/db-error.log", "a");
     fwrite($fp, $e->getMessage());
     fclose($fp);
     exit;
   }
-}
-
-function select_user_by_password($user_name, $password){
-    $sql = "SELECT users FROM php_login_users"
 }
  ?>
