@@ -12,8 +12,19 @@ if (isset($_POST['user_name']) && isset($_POST['password']) && isset($_POST['csr
   $user_name = htmlspecialchars($_POST['user_name']);
   $password = htmlspecialchars($_POST['password']);
   $token = htmlspecialchars($_POST['csrf_token']);
-  authorize_csrf_token($token);
-  authorize_user($user_name, $password);
+
+  if(!authorize_csrf_token($token)){
+    header('Location: login.php?e=wrong-token');
+    exit;
+  }
+  if(authorize_user($user_name, $password)){
+    $_SESSION['user_name'] == $user_name;
+    header('Location: /');
+    exit;
+  }else{
+    header('Location: login.php?e=incorret');
+    exit;
+  }
 }
 
 set_title("ログイン");
@@ -22,13 +33,13 @@ include_once __DIR__ . '/assets/head.php';
 <body>
   <h1>ログイン</h1>
   <div id="form">
-    <form mehod="post" action="#" name="loginform">
+    <form method="post" action="#" name="loginform">
       <label for="user" >ユーザー名</label>
       <input type="text" name="user_name" class="input-text">
       <label for="password" >パスワード</label>
       <input type="password" name="password" class="input-text">
       <input type="hidden" name="csrf_token"value="<?php echo_csrf_token(); ?>" >
-      <input type="submit" id="submit" name="login-button" value="ログイン" class="input-botton">ログイン</button>
+      <input type="submit" id="submit" name="login-button" value="ログイン" class="input-botton">
     </form>
   </div>
   <div id="footer">

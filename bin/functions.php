@@ -43,27 +43,21 @@ function authorize_csrf_token($token){
   if ($token == generate_csrf_token()){
     return true;
   }else{
-    header("Location: login.php?e=wrong-token");
-    exit;
+    return false;
   }
 }
 
 function authorize_user($user_name, $password){
-  require __DIR__ '/db.php';
+  include __DIR__ . '/db.php';
+  $db = new DB;
 
-  connect();
-  $sql = 'SELECT * FROM user WHERE name ?';
-  $stmt = $pdo->prepare($sql);
-  $stmt->execute(array($user_name));
+  $user_data = $db->get_user($user_name);
+  $hash = $db->generate_hash($password);
 
-  $result = $stmt->fetch(PDO::FETCH_ASSOC);
-  if ($result['password'] == $password){
-    $_SESSION['user_name'] = $user_name;
-    header('Location: /');
-    exit;
-  } else {
-    header('Location: /login.php?e=auth-failed')
+  if($password == $user_data['password']){
+    return true;
+  }else{
+    return false;
   }
-
 }
  ?>

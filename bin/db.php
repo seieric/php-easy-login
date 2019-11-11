@@ -5,21 +5,41 @@
 *This software is released under the MIT License.
 *http://opensource.org/licenses/mit-license.php
 */
-require __DIR__ '/config.php'
+class DB extends PDO{
+  require __DIR__ . '/config.php';
 
-//Functions
-function connect(){
-  $dsn = "mysql:dbname=#{DB_NAME};host=#{DB_HOST}";
-  $user_name = DB_USER;
-  $password = DB_PASSWD;
+  function __construct(){
+    $dsn = 'mysql:dbname=' . DB_NAME . ';host=' . DB_HOST;
+    try{
+      parent::__construct($dsn, DB_USER, DB_PASSWD, array(PDO::ATTR_PERSISTENT => true));
+    }catch(PDOException $e){
+      $this->write_log($e->getMessage());
+    }
+  }
 
-  try{
-    $pdo = new PDO($dsn, $user_name, $password));
-  } catch (PDOException $e){
-    $fp = $fopen("./logs/db-error.log", "a");
-    fwrite($fp, $e->getMessage());
-    fclose($fp);
-    exit;
+  public function get_user($user_name){
+    try{
+      $sql = 'SELECT * FROM users WHERE name = ?';
+      $stmt = $this->prepare($sql)
+      $stmt->execute(array($user_name));
+      $result = $stmt->fetch(parent::FETCH_ASSOC);
+
+      $stmt = null;
+      return $result;
+    }catch(PDOException $e){
+      $this-> write_log($e->getMessage());
+      exit;
+    }
+  }
+
+  public function generate_hash($text, $algo = "sha256"){
+    return hash($algo, $text);
+  }
+
+  private function write_log($message, $path = __DIR__ . "/logs/db-error.log"){
+    $log = fopen($path, "a");
+    fwrite($log, date("Y-m-d H:i:s") . $message);
+    fclose($log);
   }
 }
  ?>
